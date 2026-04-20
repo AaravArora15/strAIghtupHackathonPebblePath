@@ -1,0 +1,57 @@
+{
+  "profile": {
+    "age": 27,
+    "location": "Singapore",
+    "relationship_status": "In a relationship",
+    "wants_children": "yes",
+    "child_timeline": "3-5 years",
+    "career_stage": "mid",
+    "income_band": "6k-10k",
+    "retirement_age": 65
+  },
+  "state": {
+    "age": 64,
+    "months_elapsed": 444,
+    "career_stage": "senior",
+    "career_progress_score": 7,
+    "savings_delta": 500000,
+    "relationship_status": "Married",
+    "fertility_risk": "high",
+    "has_children": true,
+    "emotional_load": 4,
+    "personalisation_notes": []
+  },
+  "history": [
+    {
+      "type": "MCQ",
+      "age": 30,
+      "user_choice": "Take the promotion",
+      "outcome_scores": {
+        "career": 4,
+        "fertility": 3,
+        "finances": 4,
+        "lifestyle": 2,
+        "emotional": 3,
+        "relationships": 3
+      }
+    },
+    {
+      "type": "OPEN",
+      "age": 34,
+      "open_question": "What does success look like?",
+      "user_open_answer": "Calm days, enough money, people who know me",
+      "outcome_scores": {
+        "career": 3,
+        "fertility": 2,
+        "finances": 3,
+        "lifestyle": 4,
+        "emotional": 4,
+        "relationships": 4
+      }
+    }
+  ],
+  "last_action": {
+    "type": "MCQ",
+    "user_choice": "Wind down client work this quarter"
+  }
+}
