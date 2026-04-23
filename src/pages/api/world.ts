@@ -4,18 +4,37 @@ import { getFertilityBand } from "@/lib/fertility";
 import { getJsonBody, handleError, methodGuard } from "@/lib/http";
 import { buildWorldGenPrompt } from "@/lib/prompts";
 import {
+  PastRunNote,
+  Profile,
   ProfileSchema,
   StateSnapshot,
   WorldGenResponseSchema,
+  WorldRequestSchema,
 } from "@/lib/schemas";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!methodGuard(req, res, "POST")) return;
 
   try {
-    const profile = ProfileSchema.parse(getJsonBody(req));
+    // Accept both shapes: the wrapped { profile, past_run_notes } used by the
+    // UI, and a bare Profile body used by tests/playthrough.ts and any caller
+    // pre-dating past-run notes.
+    const rawBody = getJsonBody(req);
+    let profile: Profile;
+    let pastRunNotes: PastRunNote[] | undefined;
+    if (
+      typeof rawBody === "object" &&
+      rawBody !== null &&
+      "profile" in (rawBody as Record<string, unknown>)
+    ) {
+      const wrapped = WorldRequestSchema.parse(rawBody);
+      profile = wrapped.profile;
+      pastRunNotes = wrapped.past_run_notes;
+    } else {
+      profile = ProfileSchema.parse(rawBody);
+    }
     const band = getFertilityBand(profile.age);
-    const { system, user } = buildWorldGenPrompt(profile, band);
+    const { system, user } = buildWorldGenPrompt(profile, band, pastRunNotes);
 
     const world = await callStructured(
       { system, user, maxTokens: 1500 },

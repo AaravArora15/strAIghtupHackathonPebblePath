@@ -3,12 +3,15 @@
 // These facts are injected into every LLM call as stated constraints; the model
 // cannot override them.
 
+// Labels describe FERTILITY itself (not risk) so UI pills read naturally:
+//   "fertility: peak · 25–30%" vs. old "fertility: low · 25–30%" which
+// read like a contradiction.
 export type FertilityBandLabel =
-  | "low"
-  | "low-moderate"
+  | "peak"
+  | "strong"
   | "moderate"
-  | "moderate-high"
-  | "high";
+  | "declining"
+  | "low";
 
 export interface FertilityBand {
   label: FertilityBandLabel;
@@ -23,18 +26,18 @@ const BANDS: ReadonlyArray<{ max: number; band: FertilityBand }> = [
   {
     max: 29,
     band: {
-      label: "low",
+      label: "peak",
       age_range: "≤29",
       monthly_probability: "25–30%",
       clinical_note:
-        "Conception typically occurs within 6–12 months of trying. Fertility risk is low at this age range.",
+        "Conception typically occurs within 6–12 months of trying. Fertility is at its peak.",
       recommend_specialist: false,
     },
   },
   {
     max: 32,
     band: {
-      label: "low-moderate",
+      label: "strong",
       age_range: "30–32",
       monthly_probability: "20–25%",
       clinical_note:
@@ -57,7 +60,7 @@ const BANDS: ReadonlyArray<{ max: number; band: FertilityBand }> = [
   {
     max: 38,
     band: {
-      label: "moderate-high",
+      label: "declining",
       age_range: "36–38",
       monthly_probability: "10–15%",
       ivf_success: "30–40%",
@@ -69,7 +72,7 @@ const BANDS: ReadonlyArray<{ max: number; band: FertilityBand }> = [
   {
     max: Infinity,
     band: {
-      label: "high",
+      label: "low",
       age_range: "39+",
       monthly_probability: "5–10%",
       ivf_success: "15–25%",

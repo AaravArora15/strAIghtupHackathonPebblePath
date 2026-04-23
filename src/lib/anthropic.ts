@@ -70,9 +70,15 @@ async function rawCall(opts: CallOpts): Promise<string> {
 }
 
 // Call + validate + one retry with error feedback on schema failure.
+// Optional contentCheck runs after zod validation — return a message to
+// reject the payload as if it had failed the schema (triggers the retry
+// with the message fed back to the LLM). Use for content constraints
+// the schema can't express, e.g. "don't return RETIREMENT unless the
+// simulated age is within range of retirement_age".
 export async function callStructured<T>(
   opts: CallOpts,
   schema: ZodType<T>,
+  contentCheck?: (data: T) => string | null,
 ): Promise<T> {
   let lastError: LlmSchemaError | null = null;
 
@@ -84,7 +90,15 @@ export async function callStructured<T>(
 
     const raw = await rawCall({ ...opts, user: userPrompt });
     try {
-      return parseJson(raw, schema);
+      const parsed = parseJson(raw, schema);
+      if (contentCheck) {
+        const msg = contentCheck(parsed);
+        if (msg) {
+          lastError = new LlmSchemaError(msg, raw);
+          continue;
+        }
+      }
+      return parsed;
     } catch (err) {
       if (err instanceof LlmSchemaError) {
         lastError = err;

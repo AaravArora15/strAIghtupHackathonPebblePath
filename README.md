@@ -83,7 +83,7 @@ curl -X POST http://localhost:3000/api/pebble/choose \
   }'
 ```
 
-Returns: `{ outcome_summary, months_advanced, next, new_state, fertility_band_applied, fertility_score_clamped }`.
+Returns: `{ outcome_summary: { headline, narrative, continuity }, months_advanced, state_delta, next, new_state, fertility_band_applied, combined_path_clamped, retirement_synthesized }`.
 
 ## Deploy
 

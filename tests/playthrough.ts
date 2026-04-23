@@ -9,9 +9,6 @@ const BASE = process.env.BASE ?? "http://localhost:3000";
 const PROFILE_PATH = "tmp/profile.json";
 const MAX_TURNS = 80;
 
-type Dim = "career" | "fertility" | "finances" | "lifestyle" | "emotional" | "relationships";
-const DIMS: Dim[] = ["career", "fertility", "finances", "lifestyle", "emotional", "relationships"];
-
 const profile = JSON.parse(readFileSync(PROFILE_PATH, "utf8"));
 const warnings: string[] = [];
 
@@ -43,10 +40,10 @@ function toneChecks(text: string | undefined, where: string) {
   }
 }
 
-function logOutcome(o: Record<Dim, { score: number; label: string }>) {
-  for (const d of DIMS) {
-    console.log(`    ${d.padEnd(14)} ${o[d].score}  ${o[d].label}`);
-  }
+function logOutcome(o: { headline: string; narrative: string; continuity: string | null }) {
+  console.log(`    HEADLINE:   ${o.headline}`);
+  console.log(`    NARRATIVE:  ${o.narrative}`);
+  if (o.continuity) console.log(`    CONTINUITY: ${o.continuity}`);
 }
 
 const started = Date.now();
@@ -94,10 +91,6 @@ while (turn < MAX_TURNS) {
     last_action,
   });
 
-  const scores = DIMS.reduce<Record<string, number>>((acc, d) => {
-    acc[d] = resp.outcome_summary[d].score;
-    return acc;
-  }, {});
   history.push({
     type: last_action.type,
     age: prevAge,
@@ -107,7 +100,7 @@ while (turn < MAX_TURNS) {
           open_question: last_action.open_question,
           user_open_answer: last_action.user_open_answer,
         }),
-    outcome_scores: scores,
+    outcome_headline: resp.outcome_summary.headline,
   });
 
   const choseLabel =
@@ -125,9 +118,9 @@ while (turn < MAX_TURNS) {
     console.log(`  final_age:              ${resp.next.final_age}`);
     console.log(`  retirement_synthesized: ${resp.retirement_synthesized}`);
     console.log(`  recap: ${resp.next.recap}`);
-    console.log(`  stats:`);
-    for (const [k, v] of Object.entries(resp.next.stats)) {
-      console.log(`    ${k.padEnd(22)} ${v}`);
+    console.log(`  highlights:`);
+    for (const h of resp.next.highlights ?? []) {
+      console.log(`    ${String(h.chapter).padEnd(14)} ${h.note}`);
     }
     console.log(`  achievements:`);
     for (const a of resp.next.achievements) {
@@ -144,10 +137,9 @@ while (turn < MAX_TURNS) {
     if (achN < 1 || achN > 4) {
       warnings.push(`retirement: achievements length ${achN} out of [1,4]`);
     }
-    for (const expected of ["career_avg", "fertility_peak"]) {
-      if (typeof resp.next.stats[expected] !== "number") {
-        warnings.push(`retirement: stats.${expected} missing or not a number`);
-      }
+    const hlN = (resp.next.highlights ?? []).length;
+    if (hlN < 1 || hlN > 6) {
+      warnings.push(`retirement: highlights length ${hlN} out of [1,6]`);
     }
     break;
   }
