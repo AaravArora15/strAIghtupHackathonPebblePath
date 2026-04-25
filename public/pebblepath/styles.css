@@ -1,70 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap');
+
 :root {
-  /* PebblePath palette — teal-forward, warm neutrals */
-  --bg: oklch(0.985 0.004 180);
-  --bg-elev: oklch(0.97 0.006 180);
+  /* PebblePath palette — vivid green, warm cream neutrals, chunky solid fills.
+     Shifted from teal toward grass-green (hue ~140–150) for a playful,
+     cartoonish feel. The secondary greens (mint/leaf/moss) give us range
+     without reaching for a gradient. */
+  --bg: oklch(0.985 0.008 140);
+  --bg-elev: oklch(0.975 0.012 140);
   --bg-panel: oklch(1 0 0);
-  --bg-trail: oklch(0.99 0.004 180);
-  --grid: oklch(0.88 0.012 180 / 0.5);
-  --border: oklch(0.88 0.010 180);
-  --border-soft: oklch(0.92 0.008 180);
-  --text: oklch(0.22 0.015 200);
-  --text-dim: oklch(0.44 0.018 200);
-  --text-mute: oklch(0.62 0.015 200);
+  --bg-trail: oklch(0.99 0.012 140);
+  --grid: oklch(0.88 0.018 140 / 0.45);
+  --border: oklch(0.88 0.015 140);
+  --border-soft: oklch(0.93 0.010 140);
+  --text: oklch(0.22 0.020 160);
+  --text-dim: oklch(0.44 0.022 160);
+  --text-mute: oklch(0.62 0.018 160);
 
-  /* spec-defined teal */
-  --chosen: oklch(0.48 0.08 185);           /* ~#0F6E56 deep teal */
-  --chosen-glow: oklch(0.48 0.08 185 / 0.35);
-  --chosen-soft: oklch(0.48 0.08 185 / 0.10);
-  --chosen-ink: oklch(0.98 0.005 185);
+  /* primary — vivid grass green, chunky solid */
+  --chosen: oklch(0.62 0.18 142);           /* bold grass green */
+  --chosen-deep: oklch(0.46 0.15 142);      /* for chunky drop-shadows */
+  --chosen-glow: oklch(0.62 0.18 142 / 0.40);
+  --chosen-soft: oklch(0.62 0.18 142 / 0.12);
+  --chosen-ink: oklch(0.99 0.015 142);
 
-  --completed-alt: oklch(0.80 0.08 175);    /* ~#9FE1CB lighter teal */
-  --completed-alt-soft: oklch(0.80 0.08 175 / 0.22);
+  /* supporting green family */
+  --leaf: oklch(0.55 0.17 148);             /* depth / outlines */
+  --mint: oklch(0.86 0.10 150);             /* light backgrounds */
+  --moss: oklch(0.40 0.10 155);             /* muted deep-green */
+  --sage: oklch(0.74 0.08 145);             /* soft mid-green */
 
-  --forgone: oklch(0.80 0.008 90);          /* ~#C8C6BE warm gray */
-  --forgone-soft: oklch(0.80 0.008 90 / 0.28);
+  --completed-alt: oklch(0.82 0.12 150);    /* mint */
+  --completed-alt-soft: oklch(0.82 0.12 150 / 0.25);
 
-  --pinned: oklch(0.65 0.16 55);            /* warm pin/amber */
-  --pinned-glow: oklch(0.65 0.16 55 / 0.40);
+  --forgone: oklch(0.80 0.010 90);          /* warm gray, unchanged */
+  --forgone-soft: oklch(0.80 0.010 90 / 0.28);
 
-  --pending: oklch(1 0 0);                  /* white, outlined */
-  --pending-border: oklch(0.78 0.010 200);
+  --pinned: oklch(0.72 0.18 62);            /* brighter amber for pop */
+  --pinned-deep: oklch(0.56 0.16 62);
+  --pinned-glow: oklch(0.72 0.18 62 / 0.45);
 
-  --purple: oklch(0.55 0.15 300);           /* accent for secondary UI only */
+  --pending: oklch(1 0 0);
+  --pending-border: oklch(0.78 0.015 150);
+
+  --sky: oklch(0.78 0.12 220);              /* friendly blue accent */
+  --coral: oklch(0.70 0.18 25);             /* warm pink/coral accent */
+  --purple: oklch(0.60 0.16 300);
 
   --sans: "Nunito", -apple-system, system-ui, sans-serif;
   --mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
-  --display: "Nunito", sans-serif;
+  --display: "EB Garamond", Garamond, Cambria, "Times New Roman", Georgia, serif;
 }
 
 .dark {
-  --bg: oklch(0.18 0.015 200);
-  --bg-elev: oklch(0.22 0.018 200);
-  --bg-panel: oklch(0.24 0.020 200);
-  --bg-trail: oklch(0.19 0.016 200);
-  --grid: oklch(0.32 0.020 200 / 0.35);
-  --border: oklch(0.34 0.018 200);
-  --border-soft: oklch(0.28 0.015 200);
-  --text: oklch(0.96 0.008 200);
-  --text-dim: oklch(0.72 0.015 200);
-  --text-mute: oklch(0.55 0.018 200);
+  --bg: oklch(0.18 0.020 145);
+  --bg-elev: oklch(0.22 0.022 145);
+  --bg-panel: oklch(0.24 0.024 145);
+  --bg-trail: oklch(0.19 0.020 145);
+  --grid: oklch(0.32 0.022 145 / 0.35);
+  --border: oklch(0.34 0.020 145);
+  --border-soft: oklch(0.28 0.018 145);
+  --text: oklch(0.96 0.012 145);
+  --text-dim: oklch(0.72 0.018 145);
+  --text-mute: oklch(0.55 0.020 145);
 
-  --chosen: oklch(0.72 0.12 185);
-  --chosen-glow: oklch(0.72 0.12 185 / 0.5);
-  --chosen-soft: oklch(0.72 0.12 185 / 0.14);
-  --chosen-ink: oklch(0.15 0.015 200);
+  --chosen: oklch(0.72 0.18 142);
+  --chosen-deep: oklch(0.55 0.16 142);
+  --chosen-glow: oklch(0.72 0.18 142 / 0.5);
+  --chosen-soft: oklch(0.72 0.18 142 / 0.16);
+  --chosen-ink: oklch(0.15 0.015 145);
 
-  --completed-alt: oklch(0.58 0.10 175);
-  --completed-alt-soft: oklch(0.58 0.10 175 / 0.22);
+  --leaf: oklch(0.65 0.16 148);
+  --mint: oklch(0.40 0.10 150);
+  --moss: oklch(0.60 0.10 155);
+  --sage: oklch(0.50 0.08 145);
 
-  --forgone: oklch(0.48 0.010 200);
-  --forgone-soft: oklch(0.48 0.010 200 / 0.20);
+  --completed-alt: oklch(0.60 0.12 150);
+  --completed-alt-soft: oklch(0.60 0.12 150 / 0.22);
 
-  --pinned: oklch(0.80 0.14 65);
-  --pinned-glow: oklch(0.80 0.14 65 / 0.40);
+  --forgone: oklch(0.48 0.010 145);
+  --forgone-soft: oklch(0.48 0.010 145 / 0.20);
 
-  --pending: oklch(0.26 0.015 200);
-  --pending-border: oklch(0.45 0.015 200);
+  --pinned: oklch(0.80 0.16 62);
+  --pinned-deep: oklch(0.60 0.14 62);
+  --pinned-glow: oklch(0.80 0.16 62 / 0.40);
 
+  --pending: oklch(0.26 0.020 150);
+  --pending-border: oklch(0.45 0.020 150);
+
+  --sky: oklch(0.68 0.14 220);
+  --coral: oklch(0.68 0.18 25);
   --purple: oklch(0.72 0.16 300);
 }
 
@@ -203,6 +227,9 @@ html, body { margin: 0; padding: 0; height: 100%; background: var(--bg); color: 
   box-shadow:
     0 1px 0 oklch(1 0 0 / 0.05) inset,
     0 12px 40px oklch(0 0 0 / 0.06);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .trail-top {
@@ -502,10 +529,10 @@ html, body { margin: 0; padding: 0; height: 100%; background: var(--bg); color: 
 /* Pebble label (beneath) */
 .pebble-label {
   position: absolute;
-  left: 50%; top: calc(100% + 10px);
+  left: 50%; top: calc(100% + 8px);
   transform: translateX(-50%);
   text-align: center;
-  width: 220px;
+  width: 150px;
   pointer-events: none;
 }
 .pebble-label .title {
@@ -826,8 +853,9 @@ html, body { margin: 0; padding: 0; height: 100%; background: var(--bg); color: 
 
 /* ---------- Retirement preview card (bottom) ---------- */
 .retirement-card {
-  position: absolute;
-  left: 22px; right: 22px; bottom: 22px;
+  position: relative;
+  flex: 0 0 auto;
+  margin: 14px 22px 18px;
   padding: 16px 18px;
   border-radius: 14px;
   background: linear-gradient(135deg, var(--chosen), color-mix(in oklab, var(--chosen) 55%, var(--purple)));
@@ -861,6 +889,22 @@ html, body { margin: 0; padding: 0; height: 100%; background: var(--bg); color: 
   border-color: white;
   box-shadow: 0 3px 0 color-mix(in oklab, white 65%, black);
 }
+.retirement-card-close {
+  flex: 0 0 auto;
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  border: 0;
+  background: color-mix(in oklab, white 22%, transparent);
+  color: var(--chosen-ink);
+  display: grid; place-items: center;
+  cursor: pointer;
+  transition: background 140ms ease, transform 140ms ease;
+}
+.retirement-card-close:hover {
+  background: color-mix(in oklab, white 38%, transparent);
+  transform: translateY(-1px);
+}
+.retirement-card-close:active { transform: translateY(1px); }
 
 /* ---------- Legend (floating, docked top-right of trail, collapsible) ---------- */
 .legend {
@@ -1727,7 +1771,8 @@ html, body { margin: 0; padding: 0; height: 100%; background: var(--bg); color: 
 /* ---------- Tree layout (pan/zoom viewport) ---------- */
 .trail-viewport {
   position: relative;
-  height: calc(100% - 60px);
+  flex: 1 1 auto;
+  min-height: 0;
   overflow: hidden;
   cursor: grab;
   touch-action: none;
@@ -1965,5 +2010,790 @@ html, body { margin: 0; padding: 0; height: 100%; background: var(--bg); color: 
 /* ---------- Responsive: tighter slot width on narrow screens ---------- */
 @media (max-width: 1180px) {
   .tree-canvas { min-width: 100%; }
+}
+
+/* =========================================================================
+   PHASE 1 OVERRIDES — placed at the end so they win specificity / source-
+   order battles against earlier rules. Groups:
+     1. Layout: single-column (side inspector is replaced by bottom nav +
+        pebble modal).
+     2. Display-font typography pass.
+     3. Pebble label visibility — hide until hover / selected / current.
+     4. Livelier pebble animations.
+     5. Bottom nav.
+     6. Pebble modal (blurred backdrop + centered card).
+     7. Profile view.
+     8. Polish — smoother pill buttons, chunkier shadows.
+   ========================================================================= */
+
+/* 1. Layout — single-column app shell */
+.app {
+  grid-template-columns: 1fr !important;
+  gap: 0 !important;
+  padding: 92px 22px 96px !important; /* top reserves topbar, bottom reserves nav */
+}
+.inspector {
+  display: none !important; /* side inspector retired; PebbleModal takes over */
+}
+
+/* trail fills the width now */
+.trail-col { grid-column: 1 / -1; margin-top: 0; }
+
+/* 2. Display-font typography — apply EB Garamond to headings + big numbers
+   so the app reads "considered" / "life-arc" instead of generic-AI-app. */
+.insp-title,
+.ret-hero h1,
+.ob-hero h1,
+.ob-section-head h2,
+.run-name,
+.outcome-headline,
+.retirement-sheet h1,
+.retirement-sheet h3,
+.ret-section h3,
+.insp-eyebrow,
+.pebble-label .title {
+  font-family: var(--display);
+  letter-spacing: -0.005em;
+}
+/* Keep the brand wordmark sans so the brand reads modern + distinct. */
+.brand strong { font-family: var(--sans); }
+.ret-hero h1 { font-weight: 700; }
+.ob-hero h1 { font-weight: 700; font-size: 28px; }
+.insp-title { font-weight: 600; }
+.outcome-headline { font-weight: 600; font-size: 18px; letter-spacing: 0; }
+
+/* 3. Pebble labels — hide by default, reveal on hover / when selected /
+   when this is the live frontier. Fixes the "text everywhere" clutter and
+   lets the path breathe. */
+.pebble .pebble-label {
+  opacity: 0;
+  transform: translate(-50%, 6px);
+  transition: opacity 160ms ease, transform 220ms cubic-bezier(0.34, 1.4, 0.64, 1);
+  pointer-events: none;
+  /* a soft backing so labels stay readable over any background */
+  background: color-mix(in oklab, var(--bg-panel) 92%, transparent);
+  backdrop-filter: blur(4px);
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 3px 10px oklch(0 0 0 / 0.08);
+  max-width: 220px;
+  width: max-content;
+  white-space: normal;
+}
+.pebble:hover .pebble-label,
+.pebble.active .pebble-label,
+.pebble.current .pebble-label {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+/* keep QUESTION / OPEN_Q / START labels visible — they're the wayfinding */
+.pebble.question .pebble-label,
+.pebble.start .pebble-label {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  background: transparent;
+  backdrop-filter: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+/* active state: solid accent ring + slightly raised label */
+.pebble.active .pebble-label {
+  border-color: color-mix(in oklab, var(--chosen) 50%, var(--border));
+  box-shadow: 0 4px 14px var(--chosen-glow);
+}
+
+/* 4. Livelier pebble animations */
+@keyframes pebble-pop-in {
+  0%   { transform: scale(0.2) translateY(8px); opacity: 0; }
+  55%  { transform: scale(1.12) translateY(0); opacity: 1; }
+  78%  { transform: scale(0.94); }
+  100% { transform: scale(1); }
+}
+@keyframes pebble-chosen-pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.18) rotate(-3deg); }
+  70%  { transform: scale(0.95) rotate(2deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+@keyframes pebble-wobble-settle {
+  0%   { transform: translateX(0) rotate(0); }
+  25%  { transform: translateX(-2px) rotate(-2deg); }
+  55%  { transform: translateX(2px) rotate(2deg); }
+  80%  { transform: translateX(-1px) rotate(-1deg); }
+  100% { transform: translateX(0) rotate(0); }
+}
+.pebble .pebble-body {
+  animation: pebble-pop-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 180ms cubic-bezier(0.34, 1.4, 0.64, 1),
+              box-shadow 180ms ease,
+              background 180ms ease,
+              border-color 180ms ease,
+              filter 180ms ease;
+}
+/* bigger, squishier hover */
+.pebble:hover .pebble-body { transform: translateY(-5px) scale(1.04); }
+.pebble:active .pebble-body { transform: translateY(2px) scale(0.97); transition-duration: 80ms; }
+/* newly-chosen pebble: a single juicy pop */
+.pebble.chosen:not(.ghosted) .pebble-body { animation: pebble-chosen-pop 520ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+/* forgone siblings: wobble-settle into their ghosted spot */
+.pebble.forgone .pebble-body { animation: pebble-wobble-settle 520ms ease-out; }
+/* current frontier pulse — slower, softer, looping */
+@keyframes pebble-current-breath {
+  0%, 100% { box-shadow: 0 4px 0 var(--pending-border), 0 0 0 0 var(--chosen-glow); }
+  50%      { box-shadow: 0 4px 0 var(--pending-border), 0 0 0 14px oklch(0 0 0 / 0); background: color-mix(in oklab, var(--chosen) 5%, var(--pending)); }
+}
+.pebble.pending.current .pebble-body { animation: pebble-current-breath 2.2s ease-in-out infinite; }
+/* chunky solid drop-shadows for chosen pebbles — fewer gradients, more
+   Duolingo-card feel */
+.pebble.chosen:not(.ghosted) .pebble-body {
+  background: var(--chosen);
+  box-shadow:
+    0 8px 0 var(--chosen-deep),
+    0 14px 24px var(--chosen-glow);
+  border: 2px solid var(--chosen-deep);
+}
+.pebble.chosen:not(.ghosted):hover .pebble-body {
+  box-shadow:
+    0 10px 0 var(--chosen-deep),
+    0 18px 30px var(--chosen-glow);
+}
+.pebble.pinned .pebble-body {
+  box-shadow:
+    0 8px 0 var(--pinned-deep),
+    0 14px 22px var(--pinned-glow);
+}
+
+/* 5. Bottom nav — fixed, four big tap-targets, active state is solid-fill */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 72px;
+  background: var(--bg-panel);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: stretch;
+  z-index: 25;
+  box-shadow: 0 -6px 18px oklch(0 0 0 / 0.06);
+  padding: 8px 8px 10px;
+  gap: 4px;
+}
+.bn-item {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  background: transparent;
+  color: var(--text-mute);
+  font: inherit; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 140ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.bn-item svg { width: 22px; height: 22px; }
+.bn-item:hover {
+  color: var(--text);
+  background: var(--bg-elev);
+  transform: translateY(-2px);
+}
+.bn-item.active {
+  color: var(--chosen);
+  background: var(--chosen-soft);
+  border-color: color-mix(in oklab, var(--chosen) 50%, transparent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 color-mix(in oklab, var(--chosen) 35%, var(--border-soft));
+}
+.bn-item .bn-badge {
+  position: absolute;
+  top: 2px; right: 14px;
+  min-width: 18px; height: 18px;
+  border-radius: 999px;
+  background: var(--pinned);
+  color: white;
+  font-family: var(--mono); font-size: 10px; font-weight: 800;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0 5px;
+  box-shadow: 0 2px 0 var(--pinned-deep);
+}
+.bn-item-wrap { position: relative; display: flex; flex: 1; }
+
+/* 6. Pebble modal — blurred backdrop, spring-scale-in card */
+@keyframes pm-backdrop-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes pm-card-pop {
+  0%   { transform: scale(0.82) translateY(12px); opacity: 0; }
+  60%  { transform: scale(1.03) translateY(0); opacity: 1; }
+  100% { transform: scale(1); }
+}
+.pebble-modal-backdrop {
+  position: fixed; inset: 0;
+  z-index: 60;
+  background: color-mix(in oklab, oklch(0 0 0) 32%, transparent);
+  backdrop-filter: blur(12px) saturate(1.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  animation: pm-backdrop-fade 200ms ease-out;
+}
+.pebble-modal-card {
+  width: 100%; max-width: 560px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-soft);
+  border-radius: 22px;
+  box-shadow:
+    0 2px 0 color-mix(in oklab, var(--chosen) 18%, var(--border-soft)),
+    0 24px 60px oklch(0 0 0 / 0.28);
+  padding: 22px 22px 20px;
+  animation: pm-card-pop 360ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+.pebble-modal-card .insp-title { font-size: 22px; line-height: 1.15; }
+.pebble-modal-close {
+  position: absolute; top: 12px; right: 12px;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-panel);
+  color: var(--text-dim);
+  font-size: 18px; font-weight: 700; line-height: 1;
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: all 140ms ease;
+}
+.pebble-modal-close:hover {
+  background: var(--bg-elev);
+  color: var(--text);
+  transform: scale(1.08) rotate(90deg);
+}
+
+/* When the modal is open, soften focus on the map behind it */
+.map-dimmed .trail-viewport { filter: blur(1px) saturate(0.92); }
+
+/* 7. Profile view (stub — Phase 2 makes it editable) */
+.profile-view {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 12px 16px 40px;
+}
+.profile-view h2 {
+  font-family: var(--display); font-weight: 700;
+  font-size: 28px; letter-spacing: -0.01em;
+  margin: 0 0 4px;
+  color: var(--text);
+}
+.profile-view .pv-sub {
+  color: var(--text-mute); font-size: 13px; margin-bottom: 20px;
+}
+.profile-view .pv-block {
+  padding: 14px 16px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-soft);
+  border-radius: 14px;
+  margin-bottom: 12px;
+}
+.profile-view .pv-block h3 {
+  margin: 0 0 6px;
+  font-family: var(--sans);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--chosen);
+}
+.profile-view .pv-row {
+  display: flex; justify-content: space-between; gap: 14px;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--border-soft);
+  font-size: 14px;
+}
+.profile-view .pv-row:last-child { border-bottom: none; }
+.profile-view .pv-row .k { color: var(--text-mute); }
+.profile-view .pv-row .v { color: var(--text); font-weight: 600; text-align: right; max-width: 60%; }
+.profile-view .pv-text { color: var(--text); font-size: 13px; line-height: 1.55; font-style: italic; }
+.profile-view .pv-empty { color: var(--text-mute); font-size: 13px; font-style: italic; }
+
+/* 8. Pill tweaks — chunkier, solid fill when active */
+.pill-btn {
+  border-radius: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.pill-btn.active {
+  background: var(--chosen);
+  color: var(--chosen-ink);
+  border-color: var(--chosen-deep);
+  box-shadow: 0 3px 0 var(--chosen-deep);
+}
+.pill-btn.active:hover { transform: translateY(-1px); }
+
+/* Fit-to-view map button — floats above the trail viewport */
+.fit-view-btn {
+  position: absolute;
+  right: 14px; top: 14px;
+  z-index: 5;
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 34px; padding: 0 12px;
+  border-radius: 10px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font: inherit; font-size: 12px; font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 3px 0 color-mix(in oklab, var(--chosen) 20%, var(--border-soft)), 0 6px 14px oklch(0 0 0 / 0.06);
+  transition: all 140ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.fit-view-btn:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in oklab, var(--chosen) 40%, var(--border));
+}
+.fit-view-btn:active { transform: translateY(1px); box-shadow: 0 1px 0 color-mix(in oklab, var(--chosen) 20%, var(--border-soft)); }
+
+/* Flat cream background — the painted garden backdrop experiment got
+   pulled. Keeping this simple is the right call. */
+.app {
+  background: var(--bg) !important;
+}
+
+/* Section panels (Pinned / Runs / Profile) — fill available space, scroll
+   individually so the topbar + bottom-nav stay fixed. */
+.section-panel {
+  max-width: 820px;
+  margin: 0 auto;
+  width: 100%;
+  height: calc(100vh - 92px - 96px);
+  overflow-y: auto;
+  padding: 12px 8px 20px;
+}
+.section-panel .insp-eyebrow {
+  margin-bottom: 10px;
+}
+
+/* Brand-right slot has more items now — bump the gap so nothing crowds. */
+.brand-right { gap: 12px; }
+.brand-right .pill-btn { height: 38px; padding: 0 14px; font-size: 13px; }
+
+/* Safety: when the pebble modal is open we add .map-dimmed on .app so the
+   map behind softens into the backdrop blur. */
+.app.map-dimmed .trail-viewport { filter: blur(2px) saturate(0.9); transition: filter 200ms ease; }
+
+/* ---------------------------------------------------------------
+   ProfileView (editable) — Claude-memory-style inline editor with
+   auto-save-on-blur. All fields live here; PDF + Markdown export
+   buttons at the bottom.
+   --------------------------------------------------------------- */
+.profile-view.editable .pv-header {
+  display: flex; flex-direction: column; gap: 4px;
+  margin-bottom: 16px;
+}
+.profile-view.editable h2 {
+  display: flex; align-items: center; gap: 10px;
+  flex-wrap: wrap;
+  margin: 0;
+}
+.pv-saved {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em;
+  padding: 3px 8px; border-radius: 999px;
+  background: color-mix(in oklab, var(--chosen) 15%, transparent);
+  color: color-mix(in oklab, var(--chosen) 85%, var(--text));
+  border: 1px solid color-mix(in oklab, var(--chosen) 40%, transparent);
+  text-transform: uppercase;
+  animation: pv-saved-in 180ms ease-out;
+}
+@keyframes pv-saved-in {
+  from { opacity: 0; transform: translateY(-3px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.pv-hint-inline {
+  font-family: var(--sans); font-weight: 500;
+  font-size: 11px; color: var(--text-mute);
+  letter-spacing: normal; text-transform: none;
+  margin-left: 4px;
+}
+.profile-view .pv-block h3 {
+  display: flex; align-items: center;
+  flex-wrap: wrap;
+}
+.pv-field {
+  display: flex; flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;
+}
+.pv-field label {
+  font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--text-mute);
+}
+.pv-field-row {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-top: 10px;
+}
+.pv-field-row .pv-field { flex: 1; margin-top: 0; min-width: 120px; }
+.pv-input, .pv-textarea {
+  width: 100%;
+  font: inherit; font-size: 14px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  padding: 8px 10px;
+  outline: none;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+.pv-input-narrow { max-width: 110px; }
+.pv-input:focus, .pv-textarea:focus {
+  border-color: color-mix(in oklab, var(--chosen) 55%, var(--border));
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--chosen) 15%, transparent);
+}
+.pv-textarea {
+  min-height: 66px;
+  resize: vertical;
+  line-height: 1.5;
+}
+.pv-textarea-tall { min-height: 90px; }
+
+.pv-seg {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.pv-seg-btn {
+  padding: 7px 12px;
+  font: inherit; font-size: 13px; font-weight: 600;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 120ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.pv-seg-btn:hover {
+  border-color: color-mix(in oklab, var(--chosen) 40%, var(--border));
+  transform: translateY(-1px);
+}
+.pv-seg-btn.active {
+  background: var(--chosen);
+  color: var(--chosen-ink);
+  border-color: var(--chosen-deep);
+  box-shadow: 0 3px 0 var(--chosen-deep);
+}
+
+.pv-actions {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border-soft);
+}
+
+/* Printable PDF snapshot: html2pdf renders the current DOM. Remove any
+   hover/focus decorations when capturing. */
+@media print {
+  .bottom-nav, .topbar, .fit-view-btn, .pebble-modal-backdrop { display: none !important; }
+}
+
+/* =========================================================================
+   TutorialOverlay — post-onboarding walkthrough.
+   ========================================================================= */
+@keyframes tut-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes tut-slide-in-right {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes tut-slide-in-left {
+  from { opacity: 0; transform: translateX(-28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.tutorial-overlay {
+  position: fixed; inset: 0;
+  z-index: 70;
+  background:
+    radial-gradient(circle at 20% 10%, color-mix(in oklab, var(--chosen) 14%, transparent), transparent 55%),
+    radial-gradient(circle at 85% 90%, color-mix(in oklab, var(--completed-alt) 18%, transparent), transparent 50%),
+    var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  animation: tut-fade-in 240ms ease-out;
+  overflow-y: auto;
+}
+.tutorial-sheet {
+  width: 100%; max-width: 560px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-soft);
+  border-radius: 22px;
+  box-shadow:
+    0 3px 0 color-mix(in oklab, var(--chosen) 22%, var(--border-soft)),
+    0 24px 60px oklch(0 0 0 / 0.12);
+  padding: 20px 22px 22px;
+  display: flex; flex-direction: column;
+  gap: 16px;
+}
+.tut-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.tut-brand {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--text-dim);
+}
+.tut-brand strong { color: var(--text); letter-spacing: -0.01em; }
+
+.tut-card {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+  gap: 18px;
+  padding: 18px 8px 8px;
+}
+.tut-card.tut-fwd  { animation: tut-slide-in-right 320ms cubic-bezier(0.34, 1.4, 0.64, 1); }
+.tut-card.tut-back { animation: tut-slide-in-left  320ms cubic-bezier(0.34, 1.4, 0.64, 1); }
+
+.tut-title {
+  font-family: var(--display);
+  font-size: 30px; font-weight: 700;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--text);
+  line-height: 1.15;
+}
+.tut-body {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  max-width: 420px;
+  margin: 0;
+}
+
+/* Progress dots */
+.tut-progress {
+  display: flex; justify-content: center; gap: 8px;
+}
+.tut-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--border);
+  transition: all 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.tut-dot.done   { background: color-mix(in oklab, var(--chosen) 60%, var(--border)); }
+.tut-dot.active {
+  background: var(--chosen);
+  width: 26px; border-radius: 999px;
+  box-shadow: 0 2px 0 var(--chosen-deep);
+}
+
+.tut-actions {
+  display: flex; justify-content: space-between; gap: 10px;
+  margin-top: 4px;
+}
+.tut-actions .btn {
+  flex: 1;
+  height: 44px;
+  font-size: 14px;
+}
+
+/* Tutorial visuals — small stylized demos that float inside each card. */
+.tv {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px;
+  min-height: 110px;
+}
+
+/* welcome: three pebbles growing along a line */
+.tv-welcome .tv-pebble {
+  border-radius: 50%;
+  background: var(--chosen);
+  box-shadow: 0 5px 0 var(--chosen-deep), 0 10px 22px var(--chosen-glow);
+  animation: tv-pop 520ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes tv-pop {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); }
+}
+.tv-welcome .tv-pebble.small  { width: 28px; height: 28px; animation-delay: 60ms; }
+.tv-welcome .tv-pebble.medium { width: 38px; height: 38px; animation-delay: 160ms; }
+.tv-welcome .tv-pebble.large  { width: 52px; height: 52px; animation-delay: 260ms; }
+.tv-welcome .tv-line {
+  width: 40px; height: 3px;
+  background: color-mix(in oklab, var(--chosen) 50%, transparent);
+  border-radius: 3px;
+}
+
+/* checkpoint — single big chosen pebble with an age ribbon */
+.tv-checkpoint { flex-direction: column; }
+.tv-checkpoint .tv-pebble.big {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--chosen); color: var(--chosen-ink);
+  display: grid; place-items: center;
+  font-size: 28px;
+  box-shadow: 0 8px 0 var(--chosen-deep), 0 16px 32px var(--chosen-glow);
+  animation: tv-pop 560ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.tv-checkpoint .tv-pebble.big svg { width: 36px; height: 36px; }
+.tv-checkpoint .tv-tag {
+  margin-top: 10px;
+  padding: 3px 10px;
+  background: var(--chosen-soft);
+  color: var(--chosen);
+  border: 1px solid color-mix(in oklab, var(--chosen) 40%, transparent);
+  border-radius: 999px;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.08em; font-weight: 700;
+}
+
+/* reflection — pebble with book + speech bubble */
+.tv-reflection { flex-direction: column; }
+.tv-reflection .tv-pebble.big.reflective {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--completed-alt);
+  border: 2px solid color-mix(in oklab, var(--chosen) 40%, var(--border));
+  color: var(--chosen);
+  display: grid; place-items: center;
+  box-shadow: 0 6px 0 color-mix(in oklab, var(--chosen) 30%, var(--border)), 0 12px 26px oklch(0 0 0 / 0.1);
+  animation: tv-pop 520ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.tv-reflection .tv-pebble.big.reflective svg { width: 28px; height: 28px; }
+.tv-reflection .tv-speech {
+  margin-top: 12px;
+  padding: 8px 14px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  position: relative;
+  color: var(--text-dim);
+  font-size: 12.5px; font-style: italic;
+  max-width: 320px;
+  box-shadow: 0 4px 10px oklch(0 0 0 / 0.06);
+}
+.tv-reflection .tv-speech::before {
+  content: ""; position: absolute;
+  top: -6px; left: 50%; transform: translateX(-50%) rotate(45deg);
+  width: 10px; height: 10px;
+  background: var(--bg-panel);
+  border-top: 1px solid var(--border-soft);
+  border-left: 1px solid var(--border-soft);
+}
+
+/* branch — SVG fork (styled via stroke vars) */
+.tv-branch {
+  width: 220px; height: 120px;
+  animation: tv-pop 520ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* trophy — oversize emphasis */
+.tv-trophy .tv-trophy-icon {
+  width: 92px; height: 92px; border-radius: 24px;
+  display: grid; place-items: center;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--pinned) 80%, white), var(--pinned));
+  color: white;
+  box-shadow: 0 10px 0 var(--pinned-deep), 0 20px 40px var(--pinned-glow);
+  animation: tv-pop 620ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.tv-trophy .tv-trophy-icon svg { width: 52px; height: 52px; }
+
+/* ready — starting flag */
+.tv-ready .tv-start-flag {
+  width: 72px; height: 72px; border-radius: 20px;
+  display: grid; place-items: center;
+  background: var(--chosen);
+  color: var(--chosen-ink);
+  box-shadow: 0 8px 0 var(--chosen-deep), 0 16px 30px var(--chosen-glow);
+  animation: tv-pop 520ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.tv-ready .tv-start-flag svg { width: 34px; height: 34px; }
+
+/* ---------------------------------------------------------------
+   Animated onboarding polish — stagger-in each section so the page
+   feels alive on first paint. Also livens the step badges.
+   --------------------------------------------------------------- */
+@keyframes ob-section-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes ob-hero-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes ob-step-pop {
+  0%   { transform: scale(0); }
+  60%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+.ob-hero { animation: ob-hero-in 460ms cubic-bezier(0.34, 1.4, 0.64, 1) both; }
+.ob-section {
+  animation: ob-section-in 500ms cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+.ob-section:nth-of-type(1) { animation-delay: 80ms; }
+.ob-section:nth-of-type(2) { animation-delay: 140ms; }
+.ob-section:nth-of-type(3) { animation-delay: 200ms; }
+.ob-section:nth-of-type(4) { animation-delay: 260ms; }
+.ob-section:nth-of-type(5) { animation-delay: 320ms; }
+.ob-section:nth-of-type(6) { animation-delay: 380ms; }
+.ob-section:nth-of-type(7) { animation-delay: 440ms; }
+.ob-step {
+  animation: ob-step-pop 520ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: 600ms;
+  box-shadow: 0 3px 0 var(--chosen-deep);
+}
+.ob-seg-btn {
+  transition: all 160ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.ob-seg-btn:hover { transform: translateY(-2px); }
+.ob-seg-btn.active {
+  background: var(--chosen) !important;
+  color: var(--chosen-ink) !important;
+  border-color: var(--chosen-deep) !important;
+  box-shadow: 0 3px 0 var(--chosen-deep);
+}
+.ob-submit {
+  box-shadow: 0 4px 0 var(--chosen-deep);
+  transition: all 140ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.ob-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--chosen-deep); }
+.ob-submit:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--chosen-deep); }
+
+/* ---------------------------------------------------------------
+   Next-decision CTA — appears below the outcome reveal in the
+   pebble modal after a commit. A big juicy button that gives the
+   user a deliberate "I'm ready to move on" moment instead of
+   auto-advancing.
+   --------------------------------------------------------------- */
+.next-decision-row {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border-soft);
+  display: flex;
+  justify-content: center;
+}
+.next-decision-btn {
+  width: 100%;
+  max-width: 380px;
+  height: 52px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  box-shadow: 0 5px 0 var(--chosen-deep);
+  transition: all 160ms cubic-bezier(0.34, 1.4, 0.64, 1);
+  animation: next-decision-in 340ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.next-decision-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 var(--chosen-deep), 0 10px 20px var(--chosen-glow);
+}
+.next-decision-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 var(--chosen-deep);
+}
+@keyframes next-decision-in {
+  0%   { opacity: 0; transform: translateY(12px) scale(0.94); }
+  60%  { opacity: 1; transform: translateY(0) scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+/* The outcome block itself deserves a little stage-in animation so
+   it lands with some weight after the LLM call. */
+.pebble-modal-card .outcome {
+  animation: outcome-in 420ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+@keyframes outcome-in {
+  0%   { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 

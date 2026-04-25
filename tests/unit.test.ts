@@ -1,5 +1,5 @@
 // Tier 1 unit tests — pure-function boundary checks.
-// Run: npx tsx tests/unit.test.ts  (from TroveCodeFiles root)
+// Run: npx tsx tests/unit.test.ts  (from PebblePathCodeFiles root)
 // Zero external dependencies beyond node:assert. No framework.
 
 import assert from "node:assert/strict";
@@ -46,7 +46,7 @@ const profile: Profile = {
   wants_children: "maybe",
   child_timeline: null,
   career_stage: "mid",
-  income_band: "3k-6k",
+  income_band: "30k-50k",
   retirement_age: 65,
 };
 

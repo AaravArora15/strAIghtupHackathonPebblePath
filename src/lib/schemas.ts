@@ -47,7 +47,7 @@ export const ProfileSchema = z.object({
   // they colour outcomes and bias which trade-offs surface, but never
   // override deterministic rules like the fertility band.
   career_goals: z.string().max(500).optional().nullable(),
-  income_band: z.enum(["under-3k", "3k-6k", "6k-10k", "over-10k"]),
+  income_band: z.enum(["under-15k", "15k-30k", "30k-50k", "50k-80k", "over-80k"]),
   financial_context: z.string().max(500).optional().nullable(),
   extra_context: z.string().max(1000).optional().nullable(),
   retirement_age: z.number().int().min(50).max(75).default(65),

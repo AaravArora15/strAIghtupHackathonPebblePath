@@ -19,7 +19,7 @@ Both endpoints:
 ## Setup
 
 ```bash
-cd TroveCodeFiles
+cd PebblePathCodeFiles
 cp .env.example .env.local
 # Fill ANTHROPIC_API_KEY
 npm install

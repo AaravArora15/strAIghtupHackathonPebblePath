@@ -46,7 +46,7 @@ function clearSession() {
 // The Root gate below blocks the simulation from mounting until a profile
 // is present.
 // -------------------------------------------------------------------------
-const PROFILE_STORAGE_KEY = "pebblepath:profile:v1";
+const PROFILE_STORAGE_KEY = "pebblepath:profile:v2";
 
 function loadProfile() {
   try {
@@ -305,7 +305,7 @@ function historyEntryFor(pebble, openAnswer, outcomeHeadline) {
 
 // -------------------------------------------------------------------------
 
-function App() {
+function App({ onReplayTutorial }) {
   // Pull any saved session BEFORE the first render so lazy initialisers see
   // it. If it's present, the boot effect will skip the /api/world call.
   const saved = useRef(loadSession()).current;
@@ -314,7 +314,14 @@ function App() {
   const [editMode, setEditMode] = useState(false);
   const [pebbles, setPebbles] = useState(() => saved?.pebbles || []);
   const [selectedId, setSelectedId] = useState(() => saved?.selectedId || null);
-  const [tab, setTab] = useState(() => saved?.tab || "pebble");
+  // Top-level section (bottom nav). "pebble" tab is gone — pebble inspection
+  // now happens in PebbleModal. Old saved sessions may have tab="pebble";
+  // migrate those to "map".
+  const [section, setSection] = useState(() => {
+    const raw = saved?.section || saved?.tab || "map";
+    return raw === "pebble" ? "map" : raw;
+  });
+  const [pebbleModalOpen, setPebbleModalOpen] = useState(false);
   const [retirementOpen, setRetirementOpen] = useState(() => !!saved?.retirementOpen);
   const [retirementData, setRetirementData] = useState(() => saved?.retirementData || null);
   const [stateSnapshot, setStateSnapshot] = useState(() => saved?.stateSnapshot || null);
@@ -325,6 +332,22 @@ function App() {
   const [committing, setCommitting] = useState(false);
   const [toasts, setToasts] = useState([]);
   const [pastRuns, setPastRuns] = useState(loadPastRuns);
+  // Full profile (including free-text intake fields) — kept in state so the
+  // Profile section can render + edit without going through localStorage on
+  // every keystroke. Changes flow: ProfileView → onProfileChange →
+  // updateProfile → setProfileFull + saveProfile + applyProfileToWindow
+  // (so the next API call uses the new values immediately).
+  const [profileFull, setProfileFull] = useState(loadProfile);
+
+  const updateProfile = useCallback((patch) => {
+    setProfileFull((prev) => {
+      if (!prev) return prev;
+      const next = { ...prev, ...patch };
+      saveProfile(next);
+      applyProfileToWindow(next);
+      return next;
+    });
+  }, []);
   // When set, the retirement modal shows this past run instead of the
   // current run's data. Null = show the current run (if retired).
   const [viewingPastRunId, setViewingPastRunId] = useState(null);
@@ -438,7 +461,7 @@ function App() {
         profileKey: profileFingerprint(),
         pebbles,
         selectedId,
-        tab,
+        section,
         stateSnapshot,
         history,
         fertilityBand,
@@ -448,7 +471,7 @@ function App() {
         runId: currentRunIdRef.current,
       }));
     } catch {}
-  }, [pebbles, selectedId, tab, stateSnapshot, history, fertilityBand, scenario, retirementData, retirementOpen]);
+  }, [pebbles, selectedId, section, stateSnapshot, history, fertilityBand, scenario, retirementData, retirementOpen]);
 
   const byId = useMemo(() => Object.fromEntries(pebbles.map((p) => [p.id, p])), [pebbles]);
   const childrenOf = useMemo(() => {
@@ -474,6 +497,19 @@ function App() {
     const pending = pebbles.filter((p) => p.state === "pending" && !p.ghosted);
     return pending[0]?.siblingGroupId || null;
   }, [pebbles]);
+
+  // Single "next decision" frontier pebble — used by the PebbleModal's
+  // Next-decision CTA after the user has seen their current outcome.
+  // Prefers a non-wrapper sibling (skip QUESTION / OPEN_Q) so a click
+  // lands on something selectable.
+  const frontierPebbleId = useMemo(() => {
+    if (!frontierGroupId) return null;
+    const group = pebbles.filter(
+      (p) => p.siblingGroupId === frontierGroupId && p.state === "pending" && !p.ghosted,
+    );
+    const selectable = group.find((p) => p.type !== "QUESTION" && p.type !== "OPEN_Q");
+    return (selectable || group[0])?.id || null;
+  }, [pebbles, frontierGroupId]);
 
   const handleTogglePin = (id) => {
     setPebbles((prev) => prev.map((p) => (p.id === id ? { ...p, pinned: !p.pinned } : p)));
@@ -806,7 +842,7 @@ function App() {
         setHistory(frontierNode.pre_history || []);
       }
       setSelectedId(frontierId);
-      setTab("pebble");
+      setPebbleModalOpen(true);
       return;
     }
 
@@ -848,7 +884,7 @@ function App() {
       basePebbles = [...basePebbles, newResponse];
       setPebbles(basePebbles);
       setSelectedId(newResponseId);
-      setTab("pebble");
+      setPebbleModalOpen(true);
       activeTarget = newResponse;
     }
 
@@ -867,7 +903,7 @@ function App() {
       );
       setPebbles(basePebbles);
       setSelectedId(activeTarget.id);
-      setTab("pebble");
+      setPebbleModalOpen(true);
       // A swap abandons the old spine. Any retirement we stored belonged to
       // that spine — clear it so the Retirement pill / modal don't keep
       // showing the old life. If the new spine reaches retirement, the
@@ -981,9 +1017,17 @@ function App() {
       if (body.next?.type === "RETIREMENT") {
         setRetirementData(mapRetirement(body.next, window.PROFILE_API.age));
         setRetirementOpen(true);
-      } else if (newFrontierId) {
-        setSelectedId(newFrontierId);
+        // Close the pebble modal so the retirement modal isn't layered on
+        // top of it — retirement is the big reveal, let it own the screen.
+        setPebbleModalOpen(false);
+        window.PebbleSounds?.reward?.();
+      } else {
+        window.PebbleSounds?.commit?.();
       }
+      // No auto-advance on normal continuations — selectedId stays on
+      // activeTarget so the user sees the outcome they just triggered.
+      // A "Next decision →" button in the modal handles moving forward
+      // when they're ready. GroupInspector handles the smooth scroll.
     } catch (e) {
       alert(`Network error: ${e.message || e}`);
     } finally {
@@ -1007,23 +1051,27 @@ function App() {
     [pebbles]
   );
 
+  // Trigger pebble modal open when user picks a pebble from the map (or
+  // wherever). Wrapped so callers don't need to juggle both state setters.
+  const openPebble = useCallback((id) => {
+    setSelectedId(id);
+    setPebbleModalOpen(true);
+  }, []);
+
   return (
-    <div className="app">
+    <div className={`app ${pebbleModalOpen ? "map-dimmed" : ""}`}>
       <div className="topbar">
         <div className="brand">
           <div className="logo">{LOGO}</div>
-          <div>
-            <strong>PebblePath</strong>
-          </div>
+          <div><strong>PebblePath</strong></div>
           <span className="sub">life-path simulator</span>
         </div>
-        <div className="topbar-center">
-          <button className="pill-btn active"><Icon.Flag /> Trail</button>
-          <button className="pill-btn" onClick={() => setTab("pinned")}>
-            <Icon.Pin /> Pinned <span className="count">{pinnedView.length}</span>
-          </button>
+        <div className="brand-right">
+          {/* Retire-now / view-report — a single action button. Quick access
+              at any simulated age; offers to voluntarily end the sim when no
+              report exists yet, otherwise opens the saved one. */}
           <button
-            className="pill-btn"
+            className="pill-btn active"
             onClick={() => {
               if (retirementData) setRetirementOpen(true);
               else handleRetireNow();
@@ -1037,10 +1085,8 @@ function App() {
                   : "Retirement opens once the simulation has started"
             }
           >
-            <Icon.Trophy /> {retirementData ? "Retirement" : committing ? "Retiring…" : "Retire now"}
+            <Icon.Trophy /> {retirementData ? "Report" : committing ? "Retiring…" : "Retire now"}
           </button>
-        </div>
-        <div className="brand-right">
           <div className="profile-chip">
             <div className="avatar">{window.PROFILE.initials}</div>
             <div className="meta">
@@ -1062,46 +1108,90 @@ function App() {
         </div>
       </div>
 
-      <Trail
-        pebbles={pebbles}
-        childrenOf={childrenOf}
-        selectedId={selectedId}
-        frontierGroupId={frontierGroupId}
-        filter={tweaks.branches}
-        setFilter={(v) => setTweaksPersist({ ...tweaks, branches: v })}
-        onPick={(id) => { setSelectedId(id); setTab("pebble"); }}
-        onSwap={(id) => handleCommit(id)}
-        stages={window.STAGES}
-        onOpenRetirement={() => retirementData && setRetirementOpen(true)}
-        bootErr={bootErr}
-        scenario={scenario}
-        fertilityBand={fertilityBand}
-        committing={committing}
-        retirementReady={!!retirementData}
-        retirementData={retirementData}
+      {/* Section content. Only the Map section ever renders the Trail + its
+          heavy layout — other sections are scrollable panels. */}
+      {section === "map" && (
+        <Trail
+          pebbles={pebbles}
+          childrenOf={childrenOf}
+          selectedId={selectedId}
+          frontierGroupId={frontierGroupId}
+          filter={tweaks.branches}
+          setFilter={(v) => setTweaksPersist({ ...tweaks, branches: v })}
+          onPick={openPebble}
+          onSwap={(id) => handleCommit(id)}
+          stages={window.STAGES}
+          onOpenRetirement={() => retirementData && setRetirementOpen(true)}
+          bootErr={bootErr}
+          scenario={scenario}
+          fertilityBand={fertilityBand}
+          committing={committing}
+          retirementReady={!!retirementData}
+          retirementData={retirementData}
+        />
+      )}
+      {section === "pinned" && (
+        <div className="section-panel">
+          <PinnedView
+            items={pinnedView}
+            onOpenPeb={openPebble}
+            onStatusChange={handlePinnedStatus}
+            onNudge={nudgePinned}
+          />
+        </div>
+      )}
+      {section === "path" && (
+        <div className="section-panel">
+          <PathSummary pebbles={pebbles} onOpenPeb={openPebble} />
+        </div>
+      )}
+      {section === "runs" && (
+        <div className="section-panel">
+          <RunsList
+            runs={pastRuns}
+            currentRunId={currentRunIdRef.current}
+            onView={(id) => setViewingPastRunId(id)}
+            onRename={handleRenameRun}
+            onDelete={handleDeleteRun}
+          />
+        </div>
+      )}
+      {section === "profile" && (
+        <div className="section-panel">
+          <ProfileView
+            profile={profileFull}
+            pastRunsCount={pastRuns.length}
+            onChange={updateProfile}
+            onReplayTutorial={onReplayTutorial}
+            onResetProfile={() => {
+              clearProfile();
+              clearSession();
+              window.location.reload();
+            }}
+          />
+        </div>
+      )}
+
+      <BottomNav
+        active={section}
+        onChange={setSection}
+        pinnedCount={pinnedView.length}
+        runsCount={pastRuns.length}
       />
 
-      <Inspector
-        tab={tab}
-        setTab={setTab}
+      <PebbleModal
+        open={pebbleModalOpen && !!selected}
         selected={selected}
         group={selectedGroup}
         frontierGroupId={frontierGroupId}
+        frontierPebbleId={frontierPebbleId}
         onCommit={handleCommit}
         onTogglePin={handleTogglePin}
-        onPickSibling={(id) => { setSelectedId(id); setTab("pebble"); }}
-        pinnedView={pinnedView}
-        pebbles={pebbles}
-        onOpenPeb={(id) => { setSelectedId(id); setTab("pebble"); }}
-        onPinnedStatus={handlePinnedStatus}
-        onNudge={nudgePinned}
+        onPickSibling={openPebble}
+        onGoToFrontier={() => frontierPebbleId && openPebble(frontierPebbleId)}
+        onClose={() => setPebbleModalOpen(false)}
         committing={committing}
         fertilityBand={fertilityBand}
-        pastRuns={pastRuns}
-        currentRunId={currentRunIdRef.current}
-        onViewPastRun={(id) => setViewingPastRunId(id)}
-        onRenameRun={handleRenameRun}
-        onDeleteRun={handleDeleteRun}
       />
 
       <ToastStack toasts={toasts} onDismiss={dismissToast} />
@@ -1206,11 +1296,26 @@ function Root() {
     setProfile(persisted);
   }, []);
 
+  // Tutorial_seen mutator — used both by TutorialOverlay.onComplete (set
+  // true) and ProfileView.onReplayTutorial (set false). Writes through
+  // localStorage so the flag survives reload.
+  const setTutorialSeen = useCallback((seen) => {
+    setProfile((prev) => {
+      if (!prev) return prev;
+      const next = { ...prev, tutorial_seen: !!seen };
+      saveProfile(next);
+      applyProfileToWindow(next);
+      return next;
+    });
+  }, []);
+
   if (!profile) {
     return <Onboarding onSubmit={handleOnboardingSubmit} />;
   }
-
-  return <App />;
+  if (profile.tutorial_seen !== true) {
+    return <TutorialOverlay profile={profile} onComplete={() => setTutorialSeen(true)} />;
+  }
+  return <App onReplayTutorial={() => setTutorialSeen(false)} />;
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(<Root />);

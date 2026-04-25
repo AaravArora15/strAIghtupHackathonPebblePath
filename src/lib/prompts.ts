@@ -101,11 +101,12 @@ STATE DELTAS (emitted alongside outcome — drive background state tracking):
   narrative, not from a score.
 - savings_period_delta: SGD integer for the period. Sign matches the
   financial direction in the narrative. Rough magnitudes per 6–12 months by
-  income band (treat as guidance, not hard anchors):
-    under-3k: typical -3k..+3k, extreme -10k..+8k
-    3k-6k:    typical -5k..+5k, extreme -15k..+12k
-    6k-10k:   typical -8k..+8k, extreme -25k..+20k
-    over-10k: typical -10k..+15k, extreme -40k..+30k
+  annual income band (treat as guidance, not hard anchors):
+    under-15k: typical -2k..+2k,  extreme -5k..+3k
+    15k-30k:   typical -3k..+3k,  extreme -8k..+6k
+    30k-50k:   typical -5k..+5k,  extreme -15k..+10k
+    50k-80k:   typical -8k..+8k,  extreme -25k..+18k
+    over-80k:  typical -12k..+15k, extreme -40k..+30k
 - emotional_load_delta: -2..+2. POSITIVE = higher strain/burnout; NEGATIVE =
   lighter. Tie to the narrative: strain = +1/+2, steady = 0, relief = -1/-2.
 - has_children_change: true ONLY if this period plausibly includes a birth or
@@ -166,7 +167,7 @@ ${PAST_NOTES_TASK_DIRECTIVE}`;
 - Relationship: ${profile.relationship_status}
 - Wants children: ${profile.wants_children}${profile.child_timeline ? ` (timeline: ${profile.child_timeline})` : ""}
 - Career stage: ${profile.career_stage}
-- Income: ${profile.income_band} SGD/month
+- Income: ${profile.income_band} SGD/year
 - Retirement age: ${profile.retirement_age}
 
 USER INTAKE CONTEXT (free-text from onboarding — use to ground outcomes and
